@@ -1,7 +1,8 @@
-declare module "@onflow/fcl-wc"
+declare module '@dapperlabs/skeleton-ui'
+declare module '@onflow/fcl-wc'
 // Type definitions for @onflow/fcl 0.0
 // Project: https://github.com/onflow/fcl-js
-declare module "@onflow/fcl" {
+declare module '@onflow/fcl' {
   export namespace InteractionTemplateUtils {
     function generateDependencyPin(opts: {}): string
 
@@ -15,7 +16,7 @@ declare module "@onflow/fcl" {
   }
 
   // CONFIGURATION
-  export type Environment = "local" | "canarynet" | "testnet" | "mainnet"
+  export type Environment = 'local' | 'canarynet' | 'testnet' | 'mainnet'
 
   /**
    * @see {@link https://docs.onflow.org/fcl/reference/api/#common-configuration-keys}
@@ -27,7 +28,7 @@ declare module "@onflow/fcl" {
      * with. See all available access node endpoints
      * [here]{@link https://docs.onflow.org/access-api/#flow-access-node-endpoints}.
      */
-    "accessNode.api": string
+    'accessNode.api': string
     /**
      * Used in conjunction with stored interactions.
      */
@@ -35,22 +36,22 @@ declare module "@onflow/fcl" {
     /**
      * Points FCL at the Wallet or Wallet Discovery mechanism.
      */
-    "discovery.wallet": string
+    'discovery.wallet': string
     /**
      * ALPHA - Endpoint for alternative configurable Wallet Discovery mechanism.
      * Read more on
      * [discovery]{@link https://docs.onflow.org/fcl/reference/api/#discovery}.
      */
-    "discovery.authn.endpoint"?: string
+    'discovery.authn.endpoint'?: string
     /**
      * Your applications title, can be requested by wallets and other services.
      */
-    "app.detail.title"?: string
+    'app.detail.title'?: string
     /**
      * Url for your applications icon, can be requested by wallets and other
      * services.
      */
-    "app.detail.icon"?: string
+    'app.detail.icon'?: string
   }
 
   export interface Configuration {
@@ -115,9 +116,9 @@ declare module "@onflow/fcl" {
    * @see {@link https://github.com/onflow/fcl-discovery/blob/master/data/services.json}
    */
   export interface WalletService {
-    f_type: "Service"
+    f_type: 'Service'
     f_vsn: string
-    type: "authn"
+    type: 'authn'
     method: string
     uid: string
     endpoint: string
@@ -276,7 +277,7 @@ declare module "@onflow/fcl" {
        */
       // TODO: check syntax of param in https://github.com/onflow/fcl-js or with FCL dev team
       function subscribe(
-        callback: (res: {results: WalletService[]}) => void
+        callback: (res: { results: WalletService[] }) => void
       ): void
     }
   }

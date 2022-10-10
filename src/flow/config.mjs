@@ -1,22 +1,22 @@
-import {config} from "@onflow/fcl"
+import { config } from '@onflow/fcl'
 
 const USE_LOCAL = false
 const resolver = async () => ({
-  appIdentifier: "Awesome App (v0.0)",
-  nonce: "3037366134636339643564623330316636626239323161663465346131393662",
+  appIdentifier: 'Awesome App (v0.0)',
+  nonce: '3037366134636339643564623330316636626239323161663465346131393662',
 })
 
 config({
-  "debug.accounts": false,
-  "debug.signatures": false,
-  "debug.resolved": false,
-  "logger.level": 2,
-  "app.detail.title": "Test Harness",
-  "app.detail.icon": "https://placekitten.com/g/200/200",
-  "service.OpenID.scopes": "email",
+  'debug.accounts': false,
+  'debug.signatures': false,
+  'debug.resolved': false,
+  'logger.level': 2,
+  'app.detail.title': 'Test Harness',
+  'app.detail.icon': 'https://placekitten.com/g/200/200',
+  'service.OpenID.scopes': 'email',
   // "fcl.storage": LOCAL_STORAGE,
-  "fcl.accountProof.resolver": resolver,
-  "discovery.wallet.method": "POP/RPC",
+  'fcl.accountProof.resolver': resolver,
+  'discovery.wallet.method': 'POP/RPC',
 })
 
 if (USE_LOCAL) {

@@ -1,6 +1,6 @@
-import {useState, useEffect} from "react"
-import * as fcl from "@onflow/fcl"
-import "../flow/config"
+import { useState, useEffect } from 'react'
+import * as fcl from '@onflow/fcl'
+import '../flow/config'
 
 export function useConfig() {
   const [config, setConfig] = useState(null)
