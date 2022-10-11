@@ -1,4 +1,3 @@
-declare module '@dapperlabs/skeleton-ui'
 declare module '@onflow/fcl-wc'
 // Type definitions for @onflow/fcl 0.0
 // Project: https://github.com/onflow/fcl-js

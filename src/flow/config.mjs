@@ -32,18 +32,20 @@ if (USE_LOCAL) {
 } else {
   // prettier-ignore
   config()
-  // testnet
-    .put("flow.network", "testnet")
-    .put("accessNode.api", "https://rest-testnet.onflow.org")
-    .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn")
+    // testnet
+    .put('flow.network', 'testnet')
+    .put('accessNode.api', process.env.NEXT_PUBLIC_ACCESS_NODE_API_TESTNET)
+    .put('discovery.wallet', process.env.NEXT_PUBLIC_DISCOVERY_WALLET_TESTNET)
     .put(
-      "discovery.authn.endpoint",
-      "https://fcl-discovery.onflow.org/api/testnet/authn"
+      'discovery.authn.endpoint',
+      process.env.NEXT_PUBLIC_DISCOVERY_API_TESTNET
     )
-    .put("discovery.authn.include", [
-      "0x82ec283f88a62e65",  // Dapper
-      "0x9d2e44203cb13051",  // Ledger
+    .put('discovery.authn.include', [
+      '0x82ec283f88a62e65', // Dapper
+      '0x9d2e44203cb13051', // Ledger
     ])
+    .put('0xProfile', process.env.NEXT_PUBLIC_PROFILE_CONTRACT_TESTNET)
+
   // mainnet
   // .put("flow.network", "mainnet")
   // .put("accessNode.api", "https://rest-mainnet.onflow.org")
