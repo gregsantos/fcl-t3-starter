@@ -7,13 +7,13 @@ import '../styles/globals.css'
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ChakraProvider theme={theme}>
-      <TransactionProvider>
-        <AuthProvider>
+    <TransactionProvider>
+      <AuthProvider>
+        <ChakraProvider theme={theme}>
           <Component {...pageProps} />
-        </AuthProvider>
-      </TransactionProvider>
-    </ChakraProvider>
+        </ChakraProvider>
+      </AuthProvider>
+    </TransactionProvider>
   )
 }
 

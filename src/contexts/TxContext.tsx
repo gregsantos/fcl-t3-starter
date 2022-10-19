@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 
 // https://docs.onflow.org/fcl/reference/api/#transaction-statuses
 /**
@@ -12,21 +12,36 @@ import { createContext, useContext, useState } from 'react'
  * 5  Transaction Expired<br/>
  */
 
-export const TransactionContext = createContext({})
+interface Props {
+  children?: ReactNode
+}
+
+interface TxContextInterface {
+  transactionInProgress: boolean
+  transactionStatus: number | null
+  txId: string | null
+  initTransactionState: () => void
+  setTxId: (transactionId: string) => void
+  setTransactionStatus: (statusCode: number) => void
+}
+
+export const TransactionContext = createContext<TxContextInterface | null>(null)
 
 export const useTransaction = () => useContext(TransactionContext)
 
-export default function TransactionProvider({ children }) {
+export default function TransactionProvider({ children }: Props) {
   const [transactionInProgress, setTransactionInProgress] = useState(false)
-  const [transactionStatus, setTransactionStatus] = useState(-1)
+  const [transactionStatus, setTransactionStatus] = useState<number | null>(
+    null
+  )
   const [txId, setTxId] = useState('')
 
   function initTransactionState() {
     setTransactionInProgress(true)
-    setTransactionStatus(-1)
+    setTransactionStatus(null)
   }
 
-  const value = {
+  const value: TxContextInterface = {
     transactionInProgress,
     transactionStatus,
     txId,

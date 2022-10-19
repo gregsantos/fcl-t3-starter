@@ -1,17 +1,20 @@
-declare module '@onflow/fcl-wc'
-// Type definitions for @onflow/fcl 0.0
+// Type definitions for @onflow/fcl 1.3.0
 // Project: https://github.com/onflow/fcl-js
 declare module '@onflow/fcl' {
   export namespace InteractionTemplateUtils {
-    function generateDependencyPin(opts: {}): string
+    function generateDependencyPin(opts: object): string
 
-    function generateDependencyPinAtLatestSealedBlock(opts: {}): string
+    function generateDependencyPinAtLatestSealedBlock(
+      opts: Record<string, unknown>
+    ): string
 
-    function generateTemplateId(opts: {}): string
+    function generateTemplateId(opts: Record<string, unknown>): string
 
-    function verifyInteractionTemplateAudit(opts: {}): string
+    function verifyInteractionTemplateAudit(
+      opts: Record<string, unknown>
+    ): string
 
-    function deriveCadenceByNetwork(opts: {}): string
+    function deriveCadenceByNetwork(opts: Record<string, unknown>): string
   }
 
   // CONFIGURATION

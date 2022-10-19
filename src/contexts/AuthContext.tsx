@@ -5,20 +5,38 @@ import {
   useContext,
   useEffect,
   useState,
+  ReactNode,
 } from 'react'
 import { useTransaction } from './TxContext'
 
-export const AuthContext = createContext({})
+interface Props {
+  children?: ReactNode
+}
+
+interface AuthContextInterface {
+  currentUser: unknown
+  userProfile: unknown
+  profileExists: unknown
+  logOut: unknown
+  logIn: unknown
+  loadProfile: unknown
+  createProfile: unknown
+  updateProfile: (opts: {
+    name: string
+    color: string
+    info: string
+  }) => Promise<void>
+}
+
+export const AuthContext = createContext<AuthContextInterface | null>(null)
 
 export const useAuth = () => useContext(AuthContext)
 
-export default function AuthProvider({ children }) {
-  const { initTransactionState, setTxId, setTransactionStatus } =
-    useTransaction()
-  const [currentUser, setUser] = useState({ loggedIn: false, addr: undefined })
+export default function AuthProvider({ children }: Props) {
+  const [currentUser, setUser] = useState<fcl.CurrentUserObject | null>(null)
   const [userProfile, setProfile] = useState(null)
   const [profileExists, setProfileExists] = useState(false)
-
+  const tx = useTransaction()
   useEffect(() => fcl.currentUser.subscribe(setUser), [])
 
   const loadProfile = useCallback(async () => {
@@ -30,7 +48,7 @@ export default function AuthProvider({ children }) {
           return Profile.read(address)
         }
       `,
-      args: (arg, t) => [arg(currentUser.addr, t.Address)],
+      args: (arg, t) => [arg(currentUser?.addr, t.Address)],
     })
     setProfile(profile ?? null)
     setProfileExists(profile !== null)
@@ -38,24 +56,23 @@ export default function AuthProvider({ children }) {
   }, [currentUser, setProfile, setProfileExists])
 
   useEffect(() => {
-    if (currentUser.loggedIn && userProfile === null) {
+    if (currentUser?.loggedIn && userProfile === null) {
       loadProfile()
     }
   }, [currentUser, userProfile, loadProfile])
 
+  if (!tx) return null
+  const { initTransactionState, setTxId, setTransactionStatus } = tx
+
   const logOut = async () => {
     await fcl.unauthenticate()
-    setUser({ addr: undefined, loggedIn: false })
+    setUser(null)
     setProfile(null)
     setProfileExists(false)
   }
 
   const logIn = (service: fcl.WalletService) => {
     fcl.authenticate({ service })
-  }
-
-  const signUp = () => {
-    fcl.signUp()
   }
 
   const createProfile = async () => {
@@ -78,9 +95,6 @@ export default function AuthProvider({ children }) {
           }
         }
       `,
-      payer: fcl.authz,
-      proposer: fcl.authz,
-      authorizations: [fcl.authz],
       limit: 50,
     })
     setTxId(transactionId)
@@ -92,7 +106,15 @@ export default function AuthProvider({ children }) {
     })
   }
 
-  const updateProfile = async ({ name, color, info }) => {
+  const updateProfile = async ({
+    name,
+    color,
+    info,
+  }: {
+    name: string
+    color: string
+    info: string
+  }) => {
     initTransactionState()
 
     const transactionId = await fcl.mutate({
@@ -120,9 +142,6 @@ export default function AuthProvider({ children }) {
         arg(color, t.String),
         arg(info, t.String),
       ],
-      payer: fcl.authz,
-      proposer: fcl.authz,
-      authorizations: [fcl.authz],
       limit: 50,
     })
     setTxId(transactionId)
@@ -134,13 +153,12 @@ export default function AuthProvider({ children }) {
     })
   }
 
-  const value = {
+  const value: AuthContextInterface = {
     currentUser,
     userProfile,
     profileExists,
     logOut,
     logIn,
-    signUp,
     loadProfile,
     createProfile,
     updateProfile,
